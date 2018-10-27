@@ -15,5 +15,21 @@ return [
             'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
+        // Database settings
+        'pdo' => [
+            'engine' => 'mysql',
+            'host' => 'mysqlproj.metropolia.fi',
+            'database' => 'punch',
+            'username' => 'punch',
+            'password' => 'kdcn394PSwnK2',
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+
+            'options' => [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => true,
+            ],
+        ],
     ],
 ];

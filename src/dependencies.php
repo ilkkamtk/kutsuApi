@@ -17,3 +17,15 @@ $container['logger'] = function ($c) {
     $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
     return $logger;
 };
+
+// PDO database library
+$container['dbh'] = function ($container) {
+
+    $config = $container->get('settings')['pdo'];
+    $dsn = "{$config['engine']}:host={$config['host']};dbname={$config['database']};charset={$config['charset']}";
+    $username = $config['username'];
+    $password = $config['password'];
+
+    return new PDO($dsn, $username, $password, $config['options']);
+
+};
