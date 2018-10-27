@@ -18,9 +18,33 @@ function getCourse($dbh, $cID) {
     return $user;
   }
   else {
-    throw new Exception('{"status": "ERROR, Could not get courses."}');
+    throw new Exception('{"status": "ERROR, Could not get course."}');
   }
 }
+
+function getCalls($dbh, $cID) {
+  $STH = $dbh->prepare("SELECT * FROM kutsu_kutsu WHERE kcID = :cID;");
+  $STH->bindParam(':cID', $cID);
+  if ($STH->execute()) {
+    $calls = $STH->fetchAll();
+    return $calls;
+  }
+  else {
+    throw new Exception('{"status": "ERROR, Could not get calls."}');
+  }
+}
+
+function deleteCall($dbh, $cID) {
+  $STH = $dbh->prepare("DELETE FROM kutsu_kutsu WHERE kID = :cID;");
+  $STH->bindParam(':cID', $cID);
+  if ($STH->execute()) {
+    return '{"status": "OK"}';
+  }
+  else {
+    throw new Exception('{"status": "ERROR, Could not get calls."}');
+  }
+}
+
 
 function postCall($dbh, $request) {
   $STH = $dbh->prepare("INSERT INTO kutsu_kutsu (kName, kType, kcID) VALUES (:kName, :kType, :kcID);");

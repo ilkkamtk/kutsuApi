@@ -33,11 +33,31 @@ $app->get('/course/{cID}',
     }
   });
 
+$app->get('/calls/{cID}',
+  function ($request, $response, $args) {
+    try {
+      return $response->withJson(getCalls($this->dbh,
+        (int)$args['cID']));
+    } catch (\PDOException $e) {
+      return $response->withJson($e);
+    }
+  });
+
 $app->post('/call',
   function ($request, $response, $args) {
     try {
       return $response->withJson(postCall($this->dbh,
         $request->getParsedBody()));
+    } catch (\PDOException $e) {
+      return $response->withJson($e);
+    }
+  });
+
+$app->delete('/call/{cID}',
+  function ($request, $response, $args) {
+    try {
+      return $response->withJson(deleteCall($this->dbh,
+        (int)$args['cID']));
     } catch (\PDOException $e) {
       return $response->withJson($e);
     }
